@@ -1,41 +1,52 @@
 package com.example.transportadora.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name="mercancia")
+@Table(name="mercancias")
 public class Mercancia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="IUP")
     private Integer id;
 
-    @Column(name="nombre")
+    @Column(name="nombre",nullable = false, length =100)
     private String nombre;
 
-    @Column(name="volumen")
-    private Integer volumen;
+    @Column(name="descripcion",nullable = false, length =100)
+    private String descripcion;
 
-    @Column(name="FechaIngreso")
-    private Date fechaingreso;
+    @Column(name="fecha de entrada",nullable = false, length =50)
+    private String fecha_entrada;
 
-    @Column(name="FechaSalida")
-    private Date fechasalida;
+    @Column(name="motivo devolucion",nullable = false, length =100)
+    private String motivo_devolucion;
 
-public  Mercancia () {
-}
-    public Mercancia(Integer id, String nombre, Integer volumen, Date fechaingreso, Date fechasalida) {
-        this.id = id;
-        this.nombre = nombre;
-        this.volumen = volumen;
-        this.fechaingreso = fechaingreso;
-        this.fechasalida = fechasalida;
+    @Column(name="volumen",nullable = false, length =50)
+    private String volumen;
+
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "bodega",nullable = false)
+    @JsonBackReference
+    private Zona zona;
+
+    @Transient/*se utiliza para indicarle a JPA que un atributo de una Entidad no debe de ser persistente*/
+    private String mensajeError;
+
+
+    public Mercancia() {
     }
 
-
+    public Mercancia(Integer id, String nombre, String descripcion, String fecha_entrada, String motivo_devolucion, String volumen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fecha_entrada = fecha_entrada;
+        this.motivo_devolucion = motivo_devolucion;
+        this.volumen = volumen;
+    }
 
     public Integer getId() {
         return id;
@@ -53,22 +64,35 @@ public  Mercancia () {
         this.nombre = nombre;
     }
 
-    public Integer getvolumen() {
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getFecha_entrada() {
+        return fecha_entrada;
+    }
+
+    public void setFecha_entrada(String fecha_entrada) {
+        this.fecha_entrada = fecha_entrada;
+    }
+
+    public String getMotivo_devolucion() {
+        return motivo_devolucion;
+    }
+
+    public void setMotivo_devolucion(String motivo_devolucion) {
+        this.motivo_devolucion = motivo_devolucion;
+    }
+
+    public String getVolumen() {
         return volumen;
     }
 
-    public void setvolumen(Integer volumen) {
+    public void setVolumen(String volumen) {
         this.volumen = volumen;
     }
-
-    public  Date getfechaingreso() { return fechaingreso;}
-
-    public  void  setFechaingreso(Date fechaingreso) {this.fechaingreso = fechaingreso;}
-
-    public  Date getFechasalida() { return fechasalida;}
-
-    public  void  setFechasalida(Date fechasalida) {this.fechasalida = fechasalida;}
-
-
-
 }

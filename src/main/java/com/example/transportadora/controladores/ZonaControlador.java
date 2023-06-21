@@ -1,7 +1,7 @@
 package com.example.transportadora.controladores;
 
-import com.example.transportadora.entidades.Mercancia;
-import com.example.transportadora.servicios.MercanciaServicio;
+import com.example.transportadora.entidades.Zona;
+import com.example.transportadora.servicios.ZonaServicio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -14,40 +14,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/mercancia")
-@Tag(name="Servicio mercancias",description =  "Crud mercancias")
-public class MercanciaControlador {
+@RequestMapping("api/v1/zona")
+@Tag(name="Servicio zona",description =  "Crud zona")
+public class ZonaControlador {
     @Autowired
-    protected MercanciaServicio servicioMercancia;
+    protected ZonaServicio zonaservicio;
     @PostMapping
-    @Operation(summary ="Registrar mercancia en la BD")
+    @Operation(summary ="Registrar zona en la BD")
     @ApiResponses(value={
-            @ApiResponse(responseCode="201",description = "La mercania fue creada conrrectamente"),
-            @ApiResponse(responseCode="400",description = "Error al crear la mercancia")
+            @ApiResponse(responseCode="201",description = "La zona fue creada conrrectamente"),
+            @ApiResponse(responseCode="400",description = "Error al crear la zona")
     })
-    public ResponseEntity<Mercancia> registrar(@RequestBody Mercancia datosAGuardar){
+    public ResponseEntity<Zona> registrar(@RequestBody Zona datosAGuardar){
         try{
-            Mercancia mercanciaRegistrada = servicioMercancia.registrar(datosAGuardar);
+            Zona zonaRegistrada = zonaservicio.registrar(datosAGuardar);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(mercanciaRegistrada);
+                    .body(zonaRegistrada);
         }catch (Exception error){
             String mensaje="Error al registrar"+error.getMessage();
-            Mercancia mercanciaConError = new Mercancia();
+            Zona bodegaConError = new Zona();
 
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(mercanciaConError);
+                    .body(bodegaConError);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Mercancia>>buscarTodos(){
+    public ResponseEntity<List<Zona>>buscarTodos(){
         try{
-            List<Mercancia> mercancia= servicioMercancia.buscarTodos();
+            List<Zona> zona= zonaservicio.buscarTodos();
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(mercancia);
+                    .body(zona);
         }catch(Exception error){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
@@ -56,12 +56,12 @@ public class MercanciaControlador {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Mercancia>buscarPorId(@PathVariable Integer id ) {
+    public ResponseEntity<Zona>buscarPorId(@PathVariable Integer id ) {
         try {
-            Mercancia mercanciaEncontrada = servicioMercancia.buscarPorId(id);
+            Zona zonaEncontrada = zonaservicio.buscarPorId(id);
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(mercanciaEncontrada);
+                    .body(zonaEncontrada);
 
         }catch(Exception error){
             return ResponseEntity
@@ -70,5 +70,4 @@ public class MercanciaControlador {
 
         }
     }
-
 }
