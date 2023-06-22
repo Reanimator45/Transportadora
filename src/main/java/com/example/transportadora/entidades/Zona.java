@@ -14,17 +14,11 @@ public class Zona {
     @Column(name="id")
     private Integer id;
 
-    @Column(name="ControlEntrada",nullable = false, length =50 )
-    private String ControEntrada;
-
-    @Column(name="ControlSalida",nullable = false, length =50 )
-    private String ControlSalida;
-
-    @Column(name="Ubicacion",nullable = false, length =50 )
-    private String Ubicacion;
+    @Column(name="ubicacion",nullable = false, length =50 )
+    private String ubicacion;
 
 
-    @OneToMany(mappedBy = "bodega")
+    @OneToMany(mappedBy = "zona")
     private List<Mercancia> mercancia;
 
     @Transient/*se utiliza para indicarle a JPA que un atributo de una Entidad no debe de ser persistente*/
@@ -35,12 +29,11 @@ public class Zona {
     public Zona() {
     }
 
-    public Zona(Integer id, String controEntrada, String controlSalida, String ubicacion, List<Mercancia> mercancia) {
+    public Zona(Integer id, String ubicacion, List<Mercancia> mercancia, String mensajeError) {
         this.id = id;
-        ControEntrada = controEntrada;
-        ControlSalida = controlSalida;
-        Ubicacion = ubicacion;
+        this.ubicacion = ubicacion;
         this.mercancia = mercancia;
+        this.mensajeError = mensajeError;
     }
 
     public Integer getId() {
@@ -51,28 +44,12 @@ public class Zona {
         this.id = id;
     }
 
-    public String getControEntrada() {
-        return ControEntrada;
-    }
-
-    public void setControEntrada(String controEntrada) {
-        ControEntrada = controEntrada;
-    }
-
-    public String getControlSalida() {
-        return ControlSalida;
-    }
-
-    public void setControlSalida(String controlSalida) {
-        ControlSalida = controlSalida;
-    }
-
     public String getUbicacion() {
-        return Ubicacion;
+        return ubicacion;
     }
 
     public void setUbicacion(String ubicacion) {
-        Ubicacion = ubicacion;
+        this.ubicacion = ubicacion;
     }
 
     public List<Mercancia> getMercancia() {

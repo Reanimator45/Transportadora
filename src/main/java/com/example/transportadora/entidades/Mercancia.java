@@ -28,11 +28,11 @@ public class Mercancia {
     private String volumen;
 
     @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "bodega",nullable = false)
+    @JoinColumn(name = "zona",nullable = false)
     @JsonBackReference
     private Zona zona;
 
-    @Transient/*se utiliza para indicarle a JPA que un atributo de una Entidad no debe de ser persistente*/
+    @Transient
     private String mensajeError;
 
 
